@@ -30,3 +30,17 @@ test("should add a new task", async () => {
   expect(response.statusCode).toBe(201);
   expect(response.body.title).toBe("Learn DevOps");
 });
+
+test("metrics page should return monitoring data", async () => {
+  const response = await request(app).get("/metrics");
+
+  expect(response.statusCode).toBe(200);
+  expect(response.text).toContain("http_requests_total");
+});
+
+test("should delete a task", async () => {
+  const response = await request(app).delete("/tasks/1");
+
+  expect(response.statusCode).toBe(200);
+  expect(response.body.message).toBe("Task deleted");
+});
